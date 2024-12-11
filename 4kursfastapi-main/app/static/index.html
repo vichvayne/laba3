@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        .header, .footer {
+            background-color: greenyellow;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .header {
+            top: 0;
+        }
+        .footer {
+            bottom: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 80px auto 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        h2 {
+            text-align: center;
+            color: #4285f4;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: greenyellow;
+            outline: none;
+        }
+        .form-group button {
+            padding: 10px 15px;
+            background-color: greenyellow;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .form-group button:hover {
+            background-color: greenyellow;
+        }
+        .user-list {
+            margin-top: 20px;
+        }
+        .user-list h3 {
+            margin-bottom: 10px;
+            color: greenyellow;
+        }
+        .user-list table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .user-list table, th, td {
+            border: 1px solid #ddd;
+        }
+        .user-list th, td {
+            padding: 12px;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+        .user-list th {
+            background-color: #f9fafb;
+            color: #555;
+        }
+        .user-list tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        .user-list tr:hover {
+            background-color: #e2e3e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>User Management System</h1>
+    </div>
+
+    <div class="container">
+        <h2>User Management</h2>
+
+        <h3>Create User</h3>
+        <div class="form-group">
+            <label for="create-username">Username</label>
+            <input type="text" id="create-username" name="create-username" required>
+        </div>
+        <div class="form-group">
+            <label for="create-email">Email</label>
+            <input type="email" id="create-email" name="create-email" required>
+        </div>
+        <div class="form-group">
+            <label for="create-fullname">Full Name</label>
+            <input type="text" id="create-fullname" name="create-fullname" required>
+        </div>
+        <div class="form-group">
+            <label for="create-password">Password</label>
+            <input type="password" id="create-password" name="create-password" required>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="createUser()">Create User</button>
+        </div>
+
+        <h3>Update User</h3>
+        <div class="form-group">
+            <label for="update-userid">User ID</label>
+            <select id="update-userid" name="update-userid" required>
+                <option value="">Select User ID</option>
+                <!-- Options will be populated by JavaScript -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="update-email">Email</label>
+            <input type="email" id="update-email" name="update-email" required>
+        </div>
+        <div class="form-group">
+            <label for="update-fullname">Full Name</label>
+            <input type="text" id="update-fullname" name="update-fullname" required>
+        </div>
+        <div class="form-group">
+            <label for="update-password">Password</label>
+            <input type="password" id="update-password" name="update-password" required>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="updateUser()">Update User</button>
+        </div>
+
+        <h3>Delete User</h3>
+        <div class="form-group">
+            <label for="delete-userid">User ID</label>
+            <select id="delete-userid" name="delete-userid" required>
+                <option value="">Select User ID</option>
+                <!-- Options will be populated by JavaScript -->
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="deleteUser()">Delete User</button>
+        </div>
+
+        <div class="user-list">
+            <h3>Users</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Full Name</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list-body">
+                    <!-- Users will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; Круглов Дмитрий, 2024</p>
+    </div>
+
+    <script>
+        async function fetchUsers() {
+            try {
+                const response = await fetch('/users/');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const users = await response.json();
+                const userListBody = document.getElementById('user-list-body');
+                userListBody.innerHTML = '';
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.full_name || ''}</td>
+                    `;
+                    userListBody.appendChild(row);
+                });
+
+                // Populate the update and delete user select boxes
+                const updateUserSelect = document.getElementById('update-userid');
+                const deleteUserSelect = document.getElementById('delete-userid');
+                updateUserSelect.innerHTML = '<option value="">Select User ID</option>';
+                deleteUserSelect.innerHTML = '<option value="">Select User ID</option>';
+                users.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.id;
+                    updateUserSelect.appendChild(option.cloneNode(true));
+                    deleteUserSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Failed to fetch users:', error);
+            }
+        }
+
+        async function createUser() {
+            const username = document.getElementById('create-username').value;
+            const email = document.getElementById('create-email').value;
+            const fullName = document.getElementById('create-fullname').value;
+            const password = document.getElementById('create-password').value;
+
+            console.log('Creating user with:', { username, email, fullName, password });
+
+            try {
+                const response = await fetch('/users/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, full_name: fullName, password })
+                });
+
+                if (response.ok) {
+                    console.log('User created successfully');
+                    fetchUsers();
+                } else {
+                    console.error('Failed to create user:', await response.text());
+                    alert('Failed to create user');
+                }
+            } catch (error) {
+                console.error('Error during user creation:', error);
+                alert('Failed to create user');
+            }
+        }
+
+        async function updateUser() {
+            const userId = document.getElementById('update-userid').value;
+            const email = document.getElementById('update-email').value;
+            const fullName = document.getElementById('update-fullname').value;
+            const password = document.getElementById('update-password').value;
+
+            try {
+                const response = await fetch(`/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, full_name: fullName, password })
+                });
+
+                if (response.ok) {
+                    fetchUsers();
+                } else {
+                    console.error('Failed to update user:', await response.text());
+                    alert('Failed to update user');
+                }
+            } catch (error) {
+                console.error('Error during user update:', error);
+                alert('Failed to update user');
+            }
+        }
+
+        async function deleteUser() {
+            const userId = document.getElementById('delete-userid').value;
+
+            try {
+                const response = await fetch(`/users/${userId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    fetchUsers();
+                } else {
+                    console.error('Failed to delete user:', await response.text());
+                    alert('Failed to delete user');
+                }
+            } catch (error) {
+                console.error('Error during user deletion:', error);
+                alert('Failed to delete user');
+            }
+        }
+
+        // Initial fetch of users
+        fetchUsers();
+    </script>
+</body>
+</html>
